@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOUFLIX - Stream Unlimited</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #0d0d11;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ================= 1. LOGIN SCREEN ================= */
+    #loginPage {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+      padding: 40px 20px 24px;
+      background: radial-gradient(circle at top, #300c14 0%, #0d0d11 100%);
+    }
+
+    .auth-header {
+      text-align: center;
+    }
+
+    .brand-logo-big {
+      color: #ff0033;
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+      text-shadow: 0 0 16px rgba(255, 0, 51, 0.45);
+    }
+
+    .brand-tagline {
+      color: #999;
+      font-size: 14px;
+      letter-spacing: 0.8px;
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .btn-google {
+      width: 100%;
+      background: #fff;
+      color: #111;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: #555;
+      font-size: 13px;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #222;
+    }
+
+    .divider span {
+      padding: 0 10px;
+    }
+
+    .phone-input-wrap {
+      display: flex;
+      background: #171822;
+      border: 1px solid #2a2c3d;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .country-code {
+      padding: 12px 14px;
+      background: #202230;
+      color: #aaa;
+      font-weight: bold;
+    }
+
+    .phone-input-wrap input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px;
+    }
+
+    .btn-red {
+      width: 100%;
+      background: #ff0033;
+      color: white;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #otpArea {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .otp-field {
+      width: 100%;
+      background: #171822;
+      border: 1px solid #2a2c3d;
+      border-radius: 8px;
+      color: white;
+      font-size: 20px;
+      text-align: center;
+      letter-spacing: 6px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+
+    .auth-footer {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* ================= 2. MAIN APP HOME ================= */
+    #homePage {
+      display: none;
+      padding-bottom: 70px;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background-color: #0d0d11;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      border-bottom: 1px solid #1a1b24;
+    }
+
+    .nav-logo {
+      color: #ff0033;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+    }
+
+    .search-box {
+      background: #1a1b24;
+      border: 1px solid #2d2f40;
+      border-radius: 20px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      width: 55%;
+    }
+
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      width: 100%;
+      font-size: 13px;
+    }
+
+    /* Hero Banner */
+    .hero {
+      height: 380px;
+      background: linear-gradient(to top, #0d0d11 6%, rgba(0,0,0,0.3) 60%),
+                  url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 16px;
+    }
+
+    .hero-title {
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .hero-tags {
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 14px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-white {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 8px 22px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-gray {
+      background: rgba(100, 100, 100, 0.7);
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Movie Rows */
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 22px 16px 10px;
+    }
+
+    .row-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 0 16px 8px;
+    }
+
+    .row-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card {
+      flex: 0 0 120px;
+      cursor: pointer;
+    }
+
+    .card img {
+      width: 120px;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 6px;
+      background-color: #1a1b24;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 12px;
+      margin-top: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #ddd;
+    }
+
+    /* Video Player Overlay */
+    #videoModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.96);
+      z-index: 999;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    #appVideoPlayer {
+      width: 100%;
+      max-height: 65vh;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .btn-close-player {
+      margin-top: 18px;
+      background: #ff0033;
+      color: #fff;
+      border: none;
+      padding: 10px 26px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. LOGIN SCREEN -->
+  <div id="loginPage">
+    <div class="auth-header">
+      <div class="brand-logo-big">YOUFLIX</div>
+      <p class="brand-tagline">Stream Unlimited Movies & Shows</p>
+    </div>
+
+    <div class="auth-box">
+      <button class="btn-google" onclick="enterApp()">
+        <svg width="18" height="18" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <div class="divider">
+        <span>YA</span>
+      </div>
+
+      <div id="phoneWrap">
+        <div class="phone-input-wrap">
+          <span class="country-code">+91</span>
+          <input type="tel" id="userMobile" maxlength="10" placeholder="Mobile Number" />
+        </div>
+        <button class="btn-red" onclick="requestOtp()">Get OTP</button>
+      </div>
+
+      <div id="otpArea">
+        <input type="number" id="userOtp" class="otp-field" placeholder="••••" maxlength="4" />
+        <button class="btn-red" onclick="verifyAndEnter()">Verify & Start YOUFLIX</button>
+      </div>
+    </div>
+
+    <div class="auth-footer" onclick="enterApp()">
+      Skip for now →
+    </div>
+  </div>
+
+  <!-- 2. HOME SCREEN -->
+  <div id="homePage">
+    <div class="navbar">
+      <div class="nav-logo">YOUFLIX</div>
+      <div class="search-box">
+        <input type="text" id="movieSearch" placeholder="Search YOUFLIX..." onkeyup="filterMovies()" />
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-title">BIG BUCK BUNNY</div>
+      <div class="hero-tags">Animated • Family Classic</div>
+      <div class="hero-buttons">
+        <button class="btn-white" onclick="startPlay('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4')">▶ Play</button>
+        <button class="btn-gray" onclick="alert('Watchlist me add ho gaya!')">+ My List</button>
+      </div>
+    </div>
+
+    <div class="section-title">Trending on YOUFLIX</div>
+    <div class="row-scroll" id="trendingRow">
+      <div class="card" onclick="startPlay('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4')" data-title="Elephants Dream">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300" alt="Movie">
+        <div class="card-title">Elephants Dream</div>
+      </div>
+      <div class="card" onclick="startPlay('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4')" data-title="Action Blazes">
+        <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=300" alt="Movie">
+        <div class="card-title">Action Blazes</div>
+      </div>
+      <div class="card" onclick="startPlay('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4')" data-title="Tears of Steel">
+        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300" alt="Movie">
+        <div class="card-title">Tears of Steel</div>
+      </div>
+    </div>
+
+    <div class="section-title">Action & Blockbusters</div>
+    <div class="row-scroll" id="actionRow">
+      <div class="card" onclick="startPlay('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4')" data-title="Super Drift">
+        <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=300" alt="Movie">
+        <div class="card-title">Super Drift</div>
+      </div>
+      <div class="card" onclick="startPlay('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4')" data-title="Bull Run Highway">
+        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=300" alt="Movie">
+        <div class="card-title">Bull Run Highway</div>
+      </div>
+      <div class="card" onclick="startPlay('https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4')" data-title="Island Escape">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300" alt="Movie">
+        <div class="card-title">Island Escape</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. VIDEO PLAYER OVERLAY -->
+  <div id="videoModal">
+    <video id="appVideoPlayer" controls playsinline>
+      <source id="videoSource" src="" type="video/mp4">
+    </video>
+    <button class="btn-close-player" onclick="stopPlay()">Close Movie</button>
+  </div>
+
+  <script>
+    function enterApp() {
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("homePage").style.display = "block";
+    }
+
+    function requestOtp() {
+      const num = document.getElementById("userMobile").value.trim();
+      if (num.length !== 10) {
+        alert("10 digit ka valid number enter karein.");
+        return;
+      }
+      alert("YOUFLIX OTP: 1234");
+      document.getElementById("phoneWrap").style.display = "none";
+      document.getElementById("otpArea").style.display = "block";
+    }
+
+    function verifyAndEnter() {
+      const otp = document.getElementById("userOtp").value.trim();
+      if (!otp) {
+        alert("OTP darj karein.");
+        return;
+      }
+      enterApp();
+    }
+
+    function startPlay(url) {
+      const modal = document.getElementById("videoModal");
+      const player = document.getElementById("appVideoPlayer");
+      const src = document.getElementById("videoSource");
+
+      src.src = url;
+      player.load();
+      modal.style.display = "flex";
+      player.play();
+    }
+
+    function stopPlay() {
+      const modal = document.getElementById("videoModal");
+      const player = document.getElementById("appVideoPlayer");
+      player.pause();
+      modal.style.display = "none";
+    }
+
+    function filterMovies() {
+      const query = document.getElementById("movieSearch").value.toLowerCase();
+      const allCards = document.querySelectorAll(".card");
+
+      allCards.forEach(card => {
+        const title = card.getAttribute("data-title").toLowerCase();
+        if (title.includes(query)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
